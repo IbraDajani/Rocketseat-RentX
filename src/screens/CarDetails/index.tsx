@@ -1,13 +1,14 @@
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 import Acessories from "../../components/Acessories";
 import BackButton from "../../components/BackButton";
 import ImageSlider from "../../components/ImageSlider";
-import speedSVG from "../assets/speed.svg";
-import accelerationSVG from "../assets/acceleration.svg";
-import forceSVG from "../assets/force.svg";
-import gasolineSVG from "../assets/gasoline.svg";
-import exchangeSVG from "../assets/exchange.svg";
-import peopleSVG from "../assets/people.svg";
+import speedSVG from "../../assets/speed.svg";
+import accelerationSVG from "../../assets/acceleration.svg";
+import forceSVG from "../../assets/force.svg";
+import gasolineSVG from "../../assets/gasoline.svg";
+import exchangeSVG from "../../assets/exchange.svg";
+import peopleSVG from "../../assets/people.svg";
 
 import {
   Container,
@@ -28,6 +29,12 @@ import {
 import Button from "../../components/Button";
 
 const CarDetails: React.FC = () => {
+  const navigation = useNavigation();
+
+  const handleConfirmRental = () => {
+    navigation.navigate("Scheduling");
+  };
+
   return (
     <Container>
       <Header>
@@ -67,7 +74,10 @@ const CarDetails: React.FC = () => {
         </About>
       </Content>
       <Footer>
-        <Button title="Confirmar" />
+        <Button
+          onPress={handleConfirmRental}
+          title="Escolher período do aluguel"
+        />
       </Footer>
     </Container>
   );

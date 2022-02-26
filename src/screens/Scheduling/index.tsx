@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "react-native";
 import { useTheme } from "styled-components";
 import BackButton from "../../components/BackButton";
@@ -19,7 +20,13 @@ import Button from "../../components/Button";
 import Calendar from "../../components/Calendar";
 
 const Scheduling: React.FC = () => {
+  const navigation = useNavigation();
   const theme = useTheme();
+
+  const handleConfirmRental = () => {
+    navigation.navigate("SchedulingDetails");
+  };
+
   return (
     <Container>
       <Header>
@@ -50,7 +57,7 @@ const Scheduling: React.FC = () => {
         <Calendar />
       </Content>
       <Footer>
-        <Button title="Confirmar" />
+        <Button title="Confirmar" onPress={handleConfirmRental} />
       </Footer>
     </Container>
   );
