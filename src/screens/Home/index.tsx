@@ -1,40 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
 import { Container, Header, TotalCars, HeaderContent, CarList } from "./styles";
 import Logo from "../../assets/logo.svg";
 import Car from "../../components/Car";
-import CarDetails from "../CarDetails";
 import { useNavigation } from "@react-navigation/native";
+import { api } from "../../services/api";
+import { CarDTO } from "../../dtos/carDTO";
+import Loading from "../../components/Loading";
 
 const Home: React.FC = () => {
+  /**
+   * Navigation
+   */
+
   const navigation = useNavigation();
+
+  /**
+   * States
+   */
+
+  const [cars, setCars] = useState<CarDTO[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const handleCarDetails = () => {
     navigation.navigate("CarDetails");
   };
 
-  const carDataOne = {
-    brand: "Audi",
-    name: "RS 5 Coupé",
-    rent: {
-      period: "Ao Dia",
-      price: 120,
-    },
-    thumbnail:
-      "https://beta.alpes.one/storage/app/uploads/public/5fb/85c/f66/5fb85cf668154370944208.png",
-  };
-  // const carDataTwo = {
-  //   brand: "Porsche",
-  //   name: "Panamera",
-  //   rent: {
-  //     period: "Ao Dia",
-  //     price: 340,
-  //   },
-  //   thumbnail:
-  //     "https://mediastorage.medula.co.uk/medialibrary/primerentcar.com/images/full-landscape2-fb/751063484932355.png",
-  // };
+  /**
+   * Effects
+   */
+
+  useEffect(() => {
+    async function fetchCars() {
+      try {
+        const response = await api.get("/cars");
+        setCars(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCars();
+  }, []);
+
   return (
     <Container>
       <StatusBar
@@ -45,16 +57,20 @@ const Home: React.FC = () => {
       <Header>
         <HeaderContent>
           <Logo width={RFValue(112)} height={RFValue(12)} />
-          <TotalCars>Total de 12 carros</TotalCars>
+          <TotalCars>Total de {cars.length} carros</TotalCars>
         </HeaderContent>
       </Header>
-      <CarList
-        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-        keyExtractor={(_, index) => `${index}`}
-        renderItem={({ item }) => (
-          <Car onPress={handleCarDetails} data={carDataOne} />
-        )}
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <CarList
+          data={cars}
+          keyExtractor={(item: CarDTO) => item.id}
+          renderItem={({ item }) => (
+            <Car onPress={handleCarDetails} data={item} />
+          )}
+        />
+      )}
     </Container>
   );
 };
