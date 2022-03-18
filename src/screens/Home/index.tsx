@@ -24,6 +24,10 @@ const Home: React.FC = () => {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  /**
+   * Callbacks
+   */
+
   const handleCarDetails = () => {
     navigation.navigate("CarDetails");
   };
