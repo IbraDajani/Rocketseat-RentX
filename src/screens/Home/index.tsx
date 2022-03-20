@@ -37,7 +37,7 @@ const Home: React.FC = () => {
    */
 
   useEffect(() => {
-    async function fetchCars() {
+    const fetchCars = async () => {
       try {
         const response = await api.get("/cars");
         setCars(response.data);
@@ -46,7 +46,7 @@ const Home: React.FC = () => {
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchCars();
   }, []);
