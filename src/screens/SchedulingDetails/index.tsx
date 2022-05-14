@@ -41,16 +41,20 @@ import { useTheme } from "styled-components";
 import { useNavigation } from "@react-navigation/native";
 
 const SchedulingDetails: React.FC = () => {
-  const navigation = useNavigation();
+  const { navigate, goBack } = useNavigation();
   const theme = useTheme();
 
   const handleConfirmRental = () => {
-    navigation.navigate("SchedulingComplete");
+    navigate("SchedulingComplete");
   };
+  const handleGoBack = () => {
+    goBack();
+  };
+
   return (
     <Container>
       <Header>
-        <BackButton />
+        <BackButton onPress={handleGoBack} />
       </Header>
       <CarImage>
         <ImageSlider

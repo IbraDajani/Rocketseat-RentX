@@ -14,7 +14,7 @@ export const Header = styled.View`
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  margin-top: ${getStatusBarHeight()}px;
+  margin: ${getStatusBarHeight()}px 20px 0 20px;
 `;
 export const CarImage = styled.View`
   margin-top: ${getStatusBarHeight() + 32}px;

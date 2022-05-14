@@ -15,8 +15,7 @@ export const Header = styled.View`
   height: 325px;
   background-color: ${({ theme }) => theme.colors.header};
   justify-content: center;
-  padding: 25px;
-  padding-top: ${getStatusBarHeight() + 30}px;
+  padding: ${getStatusBarHeight() + 30}px 25px 25px 25px;
 `;
 export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.shape};

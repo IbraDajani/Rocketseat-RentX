@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -28,28 +28,28 @@ const Home: React.FC = () => {
    * Callbacks
    */
 
-  const handleCarDetails = () => {
-    navigation.navigate("CarDetails");
+  const handleCarDetails = (car: CarDTO) => {
+    navigation.navigate("CarDetails", { car });
   };
+
+  const fetchCars = useCallback(async () => {
+    try {
+      const response = await api.get("/cars");
+      setCars(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   /**
    * Effects
    */
 
   useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const response = await api.get("/cars");
-        setCars(response.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCars();
-  }, []);
+  }, [fetchCars]);
 
   return (
     <Container>
@@ -71,7 +71,7 @@ const Home: React.FC = () => {
           data={cars}
           keyExtractor={(item: CarDTO) => item.id}
           renderItem={({ item }) => (
-            <Car onPress={handleCarDetails} data={item} />
+            <Car onPress={() => handleCarDetails(item)} data={item} />
           )}
         />
       )}
