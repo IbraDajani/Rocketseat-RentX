@@ -28,6 +28,7 @@ import {
 } from "./styles";
 export interface Params {
   car: CarDTO;
+  dates?: string[];
 }
 
 import Button from "../../components/Button";
