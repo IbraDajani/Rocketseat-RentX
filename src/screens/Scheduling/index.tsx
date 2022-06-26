@@ -60,9 +60,9 @@ const Scheduling: React.FC = () => {
     }
   };
 
-  const handleGoBack = () => {
-    goBack();
-  };
+  const handleGoBack = () => goBack();
+    
+ 
 
   const handleChangeDate = (date: DayProps) => {
     let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
